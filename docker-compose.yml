@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: lucauser
+      POSTGRES_PASSWORD: lucasenha
+      POSTGRES_DB: Luca
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - minha-rede
+
+  flask:
+    build: ./app
+    image: luca_flask_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - minha-rede
+
+volumes:
+  pgdata:
+
+networks:
+  minha-rede:
